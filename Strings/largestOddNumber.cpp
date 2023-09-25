@@ -1,6 +1,5 @@
 //LeetCode
 //1903. Largest Odd Number in String
-//at11:45
 
 class Solution {
 public:
