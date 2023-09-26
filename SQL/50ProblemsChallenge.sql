@@ -20,3 +20,9 @@ select tweet_id from Tweets where length(content) > 15;
 
 
 -- Basic Joins
+
+-- 1378. Replace Employee ID With The Unique Identifier
+select unique_id, name from Employees as Emp left join EmployeeUNI as EmpUni on Emp.id = EmpUni.id;
+
+-- 1068. Product Sales Analysis I
+select p.product_name, s.year, s.price from Sales as s inner join Product as p on s.product_id = p.product_id;
