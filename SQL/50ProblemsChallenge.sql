@@ -26,3 +26,9 @@ select unique_id, name from Employees as Emp left join EmployeeUNI as EmpUni on 
 
 -- 1068. Product Sales Analysis I
 select p.product_name, s.year, s.price from Sales as s inner join Product as p on s.product_id = p.product_id;
+
+-- 1581. Customer Who Visited but Did Not Make Any Transactions
+SELECT v.customer_id, COUNT(v.visit_id) AS count_no_trans from Visits v LEFT JOIN Transactions t ON v.visit_id = t.visit_id WHERE t.transaction_id IS NULL GROUP BY v.customer_id; 
+
+-- 197. Rising Temperature
+select w1.id from Weather w1 join Weather w2 on DATEDIFF(w1.recordDate, w2.recordDate) = 1 and w1.temperature > w2.temperature;
