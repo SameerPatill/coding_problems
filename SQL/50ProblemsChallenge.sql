@@ -32,3 +32,9 @@ SELECT v.customer_id, COUNT(v.visit_id) AS count_no_trans from Visits v LEFT JOI
 
 -- 197. Rising Temperature
 select w1.id from Weather w1 join Weather w2 on DATEDIFF(w1.recordDate, w2.recordDate) = 1 and w1.temperature > w2.temperature;
+
+-- 1661. Average Time of Process per Machine
+select a1.machine_id, round(avg(a2.timestamp - a1.timestamp), 3) as processing_time from Activity a1 join Activity a2 on a1.machine_id = a2.machine_id and a1.process_id = a2.process_id and a1.activity_type = 'start' and a2.activity_type = 'end' group by a1.machine_id;
+
+-- 577. Employee Bonus
+select name, bonus from Employee as emp left join Bonus as b on emp.empId = b.empId where b.bonus < 1000 or b.bonus is NULL;
