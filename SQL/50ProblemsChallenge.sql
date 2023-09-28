@@ -38,3 +38,9 @@ select a1.machine_id, round(avg(a2.timestamp - a1.timestamp), 3) as processing_t
 
 -- 577. Employee Bonus
 select name, bonus from Employee as emp left join Bonus as b on emp.empId = b.empId where b.bonus < 1000 or b.bonus is NULL;
+
+-- 1633. Percentage of Users Attended a Contest
+select contest_id, round((count(user_id)/ (select count(user_id) from users)) * 100,2) as percentage
+from register
+group by contest_id
+order by percentage desc, contest_id
