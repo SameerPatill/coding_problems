@@ -39,8 +39,28 @@ select a1.machine_id, round(avg(a2.timestamp - a1.timestamp), 3) as processing_t
 -- 577. Employee Bonus
 select name, bonus from Employee as emp left join Bonus as b on emp.empId = b.empId where b.bonus < 1000 or b.bonus is NULL;
 
+-- 1280. Students and Examinations
+select s.student_id, s.student_name, sub.subject_name, count(e.subject_name) as attended_exams 
+from Students s 
+cross join Subjects sub 
+left join Examinations e 
+on s.student_id = e.student_id 
+and sub.subject_name = e.subject_name 
+group by s.student_id, s.student_name, sub.subject_name 
+order by s.student_id, sub.subject_name;
+
+-- 570. Managers with at Least 5 Direct Reports
+select e2.name from Employee e1 
+inner join Employee e2 
+on e1.managerId = e2.id
+group by e1.managerId 
+having count(e1.id) >= 5;
+
+
+-- Basic Aggregate Functions
+
 -- 1633. Percentage of Users Attended a Contest
 select contest_id, round((count(user_id)/ (select count(user_id) from users)) * 100,2) as percentage
 from register
 group by contest_id
-order by percentage desc, contest_id
+order by percentage desc, contest_id;
