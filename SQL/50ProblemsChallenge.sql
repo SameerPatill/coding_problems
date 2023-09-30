@@ -59,6 +59,26 @@ having count(e1.id) >= 5;
 
 -- Basic Aggregate Functions
 
+-- 620. Not Boring Movies
+select * from Cinema where mod(id, 2) <> 0 
+and description != "boring" 
+order by rating desc;
+
+-- 1251. Average Selling Price
+select p.product_id, ifnull(round(sum(units * price) / sum(units), 2), 0) as average_price 
+from Prices p 
+left join UnitsSold us 
+on p.product_id = us.product_id 
+and us.purchase_date between p.start_date and p.end_date 
+group by p.product_id;
+
+-- 1075. Project Employees I
+select project_id, round(avg(experience_years), 2) as average_years 
+from Project p 
+join Employee e 
+on p.employee_id = e.employee_id 
+group by p.project_id;
+
 -- 1633. Percentage of Users Attended a Contest
 select contest_id, round((count(user_id)/ (select count(user_id) from users)) * 100,2) as percentage
 from register
