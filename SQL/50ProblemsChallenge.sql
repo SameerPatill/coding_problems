@@ -19,6 +19,7 @@ select distinct author_id AS id from Views where author_id = viewer_id order by 
 select tweet_id from Tweets where length(content) > 15;
 
 
+
 -- Basic Joins
 
 -- 1378. Replace Employee ID With The Unique Identifier
@@ -57,6 +58,7 @@ group by e1.managerId
 having count(e1.id) >= 5;
 
 
+
 -- Basic Aggregate Functions
 
 -- 620. Not Boring Movies
@@ -84,3 +86,14 @@ select contest_id, round((count(user_id)/ (select count(user_id) from users)) * 
 from register
 group by contest_id
 order by percentage desc, contest_id;
+
+-- 1211. Queries Quality and Percentage
+select query_name, round(sum(rating / position) / count(query_name), 2) as quality, round(AVG(if(rating < 3, 1, 0)) * 100, 2) as poor_query_percentage 
+from Queries group by query_name;
+
+
+
+-- Sorting & Grouping
+
+-- 2356. Number of Unique Subjects Taught by Each Teacher
+select teacher_id, count(distinct(subject_id)) as cnt from Teacher group by teacher_id;
