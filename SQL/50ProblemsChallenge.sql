@@ -57,6 +57,13 @@ on e1.managerId = e2.id
 group by e1.managerId 
 having count(e1.id) >= 5;
 
+-- 1934. Confirmation Rate
+SELECT s.user_id, round(ifnull(sum(action = 'confirmed') / count(c.user_id), 0), 2) AS confirmation_rate
+FROM Signups s
+LEFT JOIN Confirmations c
+ON s.user_id = c.user_id
+GROUP BY s.user_id;
+
 
 
 -- Basic Aggregate Functions
@@ -91,9 +98,24 @@ order by percentage desc, contest_id;
 select query_name, round(sum(rating / position) / count(query_name), 2) as quality, round(AVG(if(rating < 3, 1, 0)) * 100, 2) as poor_query_percentage 
 from Queries group by query_name;
 
+-- 1193. Monthly Transactions I
+SELECT date_format(trans_date, '%Y-%m') AS month, country,
+count(*) AS trans_count,
+sum(if(state = 'approved', 1, 0)) AS approved_count,
+sum(amount) AS trans_total_amount,
+sum(if(state = 'approved', amount, 0)) AS approved_total_amount
+FROM Transactions
+GROUP BY month, country;
+
 
 
 -- Sorting & Grouping
 
 -- 2356. Number of Unique Subjects Taught by Each Teacher
 select teacher_id, count(distinct(subject_id)) as cnt from Teacher group by teacher_id;
+
+-- 1141. User Activity for the Past 30 Days I
+SELECT activity_date AS day, count(distinct user_id) AS active_users FROM Activity
+WHERE (activity_date > '2019-06-27'
+AND activity_date <= '2019-07-27')
+GROUP BY activity_date;
