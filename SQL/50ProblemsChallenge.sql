@@ -107,6 +107,16 @@ sum(if(state = 'approved', amount, 0)) AS approved_total_amount
 FROM Transactions
 GROUP BY month, country;
 
+-- 1174. Immediate Food Delivery II
+SELECT round(avg(order_date = customer_pref_delivery_date)*100, 2) AS immediate_percentage
+FROM Delivery
+WHERE (customer_id, order_date)
+IN 
+  (select customer_id, min(order_date) from Delivery 
+  group by customer_id);
+
+
+
 
 
 -- Sorting & Grouping
@@ -119,3 +129,26 @@ SELECT activity_date AS day, count(distinct user_id) AS active_users FROM Activi
 WHERE (activity_date > '2019-06-27'
 AND activity_date <= '2019-07-27')
 GROUP BY activity_date;
+
+-- 1070. Product Sales Analysis III
+SELECT product_id, year AS first_year, quantity, price FROM Sales 
+WHERE (product_id, year)
+IN
+    (SELECT product_id, MIN(year) FROM Sales 
+    GROUP BY product_id);
+
+-- 596. Classes More Than 5 Students
+SELECT class FROM Courses
+GROUP BY class
+HAVING count(student) >= 5;
+
+-- 1729. Find Followers Count
+SELECT user_id, count(*) AS followers_count
+FROM Followers group by user_id
+ORDER By user_id;
+
+-- 619. Biggest Single Number
+SELECT max(num) AS num FROM MyNumbers
+WHERE num IN
+(SELECT num FROM MyNumbers group by num
+HAVING count(num) = 1);
